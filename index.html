@@ -1,0 +1,1020 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Medical: Future Tech (Connected)</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Sarabun:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Markdown Parser -->
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Sarabun', 'sans-serif'],
+                        display: ['Outfit', 'sans-serif'],
+                    },
+                    colors: {
+                        cyber: {
+                            50: '#f0f9ff', 100: '#e0f2fe', 
+                            400: '#38bdf8', 500: '#0ea5e9', // Cyan/Sky
+                            600: '#0284c7', 700: '#0369a1',
+                            dark: '#0f172a', // Slate 900
+                            card: 'rgba(255, 255, 255, 0.7)',
+                            glass: 'rgba(255, 255, 255, 0.4)',
+                        },
+                    },
+                    boxShadow: {
+                        'neon': '0 0 15px rgba(14, 165, 233, 0.4), 0 0 5px rgba(14, 165, 233, 0.2)',
+                        'neon-hover': '0 0 25px rgba(14, 165, 233, 0.6), 0 0 10px rgba(14, 165, 233, 0.4)',
+                        'glass': '0 8px 32px 0 rgba(31, 38, 135, 0.15)',
+                    },
+                    animation: {
+                        'float': 'float 6s ease-in-out infinite',
+                        'pulse-glow': 'pulseGlow 2s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                        'slide-up': 'slideUp 0.5s ease-out forwards',
+                        'slide-in-right': 'slideInRight 0.4s ease-out forwards',
+                        'pop-in': 'popIn 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards',
+                    },
+                    keyframes: {
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0)' },
+                            '50%': { transform: 'translateY(-10px)' },
+                        },
+                        pulseGlow: {
+                            '0%, 100%': { opacity: 1, boxShadow: '0 0 15px rgba(14, 165, 233, 0.4)' },
+                            '50%': { opacity: .7, boxShadow: '0 0 25px rgba(14, 165, 233, 0.8)' },
+                        },
+                        slideUp: {
+                            '0%': { opacity: 0, transform: 'translateY(20px)' },
+                            '100%': { opacity: 1, transform: 'translateY(0)' },
+                        },
+                        slideInRight: {
+                            '0%': { opacity: 0, transform: 'translateX(20px)' },
+                            '100%': { opacity: 1, transform: 'translateX(0)' },
+                        },
+                        popIn: {
+                            '0%': { opacity: 0, transform: 'scale(0.8)' },
+                            '100%': { opacity: 1, transform: 'scale(1)' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        body { 
+            font-family: 'Sarabun', sans-serif; 
+            background: #f0f4f8;
+            background-image: 
+                radial-gradient(at 0% 0%, rgba(14, 165, 233, 0.1) 0px, transparent 50%),
+                radial-gradient(at 100% 0%, rgba(139, 92, 246, 0.1) 0px, transparent 50%),
+                radial-gradient(at 100% 100%, rgba(14, 165, 233, 0.1) 0px, transparent 50%);
+            background-attachment: fixed;
+        }
+        
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.65);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.5);
+            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.1);
+        }
+
+        .hide-scrollbar::-webkit-scrollbar { display: none; }
+        
+        /* Staggered Animations */
+        .delay-100 { animation-delay: 100ms; }
+        .delay-200 { animation-delay: 200ms; }
+        .delay-300 { animation-delay: 300ms; }
+        .delay-400 { animation-delay: 400ms; }
+
+        /* Custom Hover Effects */
+        .hover-lift { transition: transform 0.3s ease, box-shadow 0.3s ease; }
+        .hover-lift:hover { transform: translateY(-5px); box-shadow: 0 15px 30px -5px rgba(14, 165, 233, 0.3); }
+        
+        .nav-item { position: relative; overflow: hidden; }
+        .nav-item::before {
+            content: ''; position: absolute; left: 0; top: 0; height: 100%; width: 3px;
+            background: #0ea5e9; transform: scaleY(0); transition: transform 0.3s ease;
+        }
+        .nav-item:hover::before, .nav-active::before { transform: scaleY(1); }
+        
+        .nav-active {
+            background: linear-gradient(90deg, rgba(14, 165, 233, 0.1) 0%, transparent 100%);
+            color: #0284c7;
+            font-weight: 600;
+        }
+
+        /* Input Glow */
+        .input-glow:focus {
+            box-shadow: 0 0 0 3px rgba(14, 165, 233, 0.2);
+            border-color: #38bdf8;
+        }
+
+        /* Markdown Styling */
+        .ai-report h1, .ai-report h2, .ai-report h3 { 
+            background: linear-gradient(to right, #0284c7, #8b5cf6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-weight: 800; margin-top: 15px; margin-bottom: 8px; 
+        }
+        .ai-report ul { list-style-type: none; padding-left: 0; }
+        .ai-report li { position: relative; padding-left: 20px; margin-bottom: 5px; }
+        .ai-report li::before { content: '•'; color: #0ea5e9; font-weight: bold; position: absolute; left: 0; }
+        .ai-report strong { color: #0369a1; }
+    </style>
+</head>
+<body class="h-screen flex overflow-hidden text-slate-700">
+
+    <!-- Sidebar (Glass) -->
+    <aside class="w-20 md:w-72 glass-panel z-50 flex flex-col m-4 rounded-3xl animate-slide-in-right">
+        <div class="h-24 flex items-center justify-center md:justify-start px-8 border-b border-white/50">
+            <div class="font-display font-bold text-3xl tracking-wide flex items-center gap-2 text-transparent bg-clip-text bg-gradient-to-r from-cyber-600 to-purple-600 animate-pulse-glow">
+                <i class="fa-solid fa-dna text-2xl text-cyber-500"></i>
+                <span class="hidden md:inline">Med<span class="font-light">AI</span></span>
+            </div>
+        </div>
+        <nav class="flex-1 space-y-3 py-6 px-3">
+            <button onclick="switchTab('dashboard')" id="nav-dashboard" class="nav-item w-full flex items-center px-4 py-3.5 rounded-xl text-slate-500 hover:text-cyber-600 transition-all group hover:bg-white/50">
+                <i class="fa-solid fa-chart-pie text-xl w-8 transition-transform group-hover:scale-110 group-hover:rotate-6"></i>
+                <span class="hidden md:inline ml-2 group-hover:translate-x-1 transition-transform">Dashboard</span>
+            </button>
+            <button onclick="switchTab('search')" id="nav-search" class="nav-item w-full flex items-center px-4 py-3.5 rounded-xl text-slate-500 hover:text-cyber-600 transition-all group hover:bg-white/50">
+                <i class="fa-solid fa-magnifying-glass-chart text-xl w-8 transition-transform group-hover:scale-110 group-hover:rotate-6"></i>
+                <span class="hidden md:inline ml-2 group-hover:translate-x-1 transition-transform">Patient Search</span>
+            </button>
+            <button onclick="switchTab('analyze')" id="nav-analyze" class="nav-item w-full flex items-center px-4 py-3.5 rounded-xl text-slate-500 hover:text-cyber-600 transition-all group hover:bg-white/50">
+                <i class="fa-solid fa-microchip text-xl w-8 transition-transform group-hover:scale-110 group-hover:rotate-6"></i>
+                <span class="hidden md:inline ml-2 group-hover:translate-x-1 transition-transform">AI Diagnosis</span>
+            </button>
+            <button onclick="switchTab('chat')" id="nav-chat" class="nav-item w-full flex items-center px-4 py-3.5 rounded-xl text-slate-500 hover:text-cyber-600 transition-all group hover:bg-white/50">
+                <i class="fa-solid fa-user-astronaut text-xl w-8 transition-transform group-hover:scale-110 group-hover:rotate-6"></i>
+                <span class="hidden md:inline ml-2 group-hover:translate-x-1 transition-transform">Consultant</span>
+            </button>
+        </nav>
+        <div class="p-6">
+            <div class="bg-gradient-to-r from-cyber-500 to-purple-500 rounded-2xl p-4 flex items-center gap-3 text-white shadow-neon animate-float cursor-pointer hover:scale-105 transition-transform">
+                <div class="w-10 h-10 rounded-full bg-white/20 backdrop-blur-md flex items-center justify-center shadow-inner">
+                    <i class="fa-solid fa-server text-white"></i>
+                </div>
+                <div class="hidden md:block overflow-hidden">
+                    <p class="text-sm font-bold truncate">Server Status</p>
+                    <p class="text-[10px] text-white/80 flex items-center gap-1" id="server-status-text">
+                        <span id="server-dot" class="w-1.5 h-1.5 rounded-full bg-gray-400"></span> Checking...
+                    </p>
+                </div>
+            </div>
+        </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="flex-1 flex flex-col h-full relative overflow-hidden py-4 pr-4">
+        
+        <!-- Header -->
+        <header class="glass-panel h-20 px-8 flex items-center justify-between rounded-3xl mb-6 animate-slide-up">
+            <div>
+                <h1 id="page-title" class="text-2xl font-display font-bold text-slate-800 tracking-tight">System Overview</h1>
+                <p class="text-slate-400 text-xs mt-0.5 tracking-wide uppercase font-semibold" id="current-date">LIVE MONITORING</p>
+            </div>
+            
+            <div class="flex items-center gap-4">
+                <div class="hidden md:flex bg-white/50 border border-white rounded-full px-4 py-2 shadow-inner items-center gap-3 w-64 focus-within:ring-2 focus-within:ring-cyber-400 transition-all">
+                    <i class="fa-solid fa-bolt text-cyber-400"></i>
+                    <input type="text" placeholder="Global Search..." class="bg-transparent text-sm outline-none w-full text-slate-600 placeholder-slate-400">
+                </div>
+                <button class="w-10 h-10 rounded-full bg-white border border-white shadow-sm flex items-center justify-center text-slate-400 hover:text-cyber-600 hover:shadow-neon transition-all hover:-translate-y-1">
+                    <i class="fa-solid fa-bell animate-swing"></i>
+                </button>
+                <div class="w-10 h-10 rounded-full p-0.5 bg-gradient-to-tr from-cyber-400 to-purple-400 shadow-md">
+                    <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Doctor" alt="Profile" class="w-full h-full rounded-full bg-white border-2 border-white">
+                </div>
+            </div>
+        </header>
+
+        <!-- Scrollable Area -->
+        <div class="flex-1 overflow-y-auto pb-4 pr-2 scroll-smooth">
+            
+            <!-- Toast -->
+            <div id="toast" class="fixed top-24 left-1/2 transform -translate-x-1/2 -translate-y-20 transition-all duration-500 bg-slate-800/90 backdrop-blur-md text-white px-6 py-3 rounded-full shadow-2xl z-[100] flex items-center gap-3 opacity-0 pointer-events-none border border-slate-600/50">
+                <div id="toast-icon-container" class="w-6 h-6 rounded-full bg-green-500 flex items-center justify-center shadow-lg"><i id="toast-icon" class="fa-solid fa-check text-xs"></i></div>
+                <span id="toast-message" class="text-sm font-medium">Notification</span>
+            </div>
+
+            <!-- VIEW 1: DASHBOARD -->
+            <div id="view-dashboard" class="space-y-6">
+                <!-- Stats Row -->
+                <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
+                    <!-- Card 1 -->
+                    <div class="glass-panel p-6 rounded-3xl hover-lift cursor-pointer group relative overflow-hidden animate-slide-up delay-100">
+                        <div class="absolute -right-6 -top-6 w-24 h-24 bg-blue-400/20 rounded-full blur-2xl group-hover:bg-blue-400/30 transition-all"></div>
+                        <div class="flex justify-between items-start mb-4">
+                            <div class="w-12 h-12 rounded-2xl bg-gradient-to-br from-blue-50 to-blue-100 text-blue-600 flex items-center justify-center text-xl shadow-inner group-hover:scale-110 transition-transform duration-300">
+                                <i class="fa-solid fa-hospital-user"></i>
+                            </div>
+                            <span class="bg-green-100/80 text-green-600 text-xs font-bold px-2 py-1 rounded-lg backdrop-blur-sm border border-green-200">+Realtime</span>
+                        </div>
+                        <h3 class="text-slate-500 text-sm font-medium uppercase tracking-wider">Total Patients</h3>
+                        <p class="text-3xl font-display font-bold text-slate-800 mt-1 count-up" id="dash-total">--</p>
+                    </div>
+                    
+                    <!-- Card 2 -->
+                    <div class="glass-panel p-6 rounded-3xl hover-lift cursor-pointer group relative overflow-hidden animate-slide-up delay-200">
+                        <div class="absolute -right-6 -top-6 w-24 h-24 bg-orange-400/20 rounded-full blur-2xl group-hover:bg-orange-400/30 transition-all"></div>
+                        <div class="flex justify-between items-start mb-4">
+                            <div class="w-12 h-12 rounded-2xl bg-gradient-to-br from-orange-50 to-orange-100 text-orange-500 flex items-center justify-center text-xl shadow-inner group-hover:scale-110 transition-transform duration-300">
+                                <i class="fa-solid fa-cake-candles"></i>
+                            </div>
+                        </div>
+                        <h3 class="text-slate-500 text-sm font-medium uppercase tracking-wider">Avg. Age</h3>
+                        <p class="text-3xl font-display font-bold text-slate-800 mt-1" id="dash-age">--</p>
+                    </div>
+
+                    <!-- Card 3 -->
+                    <div class="glass-panel p-6 rounded-3xl hover-lift cursor-pointer group relative overflow-hidden animate-slide-up delay-300">
+                        <div class="absolute -right-6 -top-6 w-24 h-24 bg-purple-400/20 rounded-full blur-2xl group-hover:bg-purple-400/30 transition-all"></div>
+                        <div class="flex justify-between items-start mb-4">
+                            <div class="w-12 h-12 rounded-2xl bg-gradient-to-br from-purple-50 to-purple-100 text-purple-500 flex items-center justify-center text-xl shadow-inner group-hover:scale-110 transition-transform duration-300">
+                                <i class="fa-solid fa-venus-mars"></i>
+                            </div>
+                        </div>
+                        <h3 class="text-slate-500 text-sm font-medium uppercase tracking-wider">Demographics</h3>
+                        <p class="text-lg font-display font-bold text-slate-800 mt-2" id="dash-gender">Loading...</p>
+                    </div>
+
+                    <!-- Card 4 (Gemini AI) -->
+                    <div class="p-6 rounded-3xl bg-gradient-to-br from-cyber-600 to-indigo-600 text-white relative overflow-hidden group shadow-neon hover:shadow-neon-hover transition-all animate-slide-up delay-400">
+                        <div class="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-10"></div>
+                        <div class="absolute -right-10 -top-10 w-40 h-40 bg-white/20 rounded-full blur-xl group-hover:scale-110 transition duration-700 animate-pulse"></div>
+                        <div class="relative z-10">
+                            <div class="mb-4 text-white/90 text-2xl animate-float"><i class="fa-solid fa-robot"></i></div>
+                            <h3 class="text-cyan-100 text-sm font-medium tracking-wider">GEMINI CORE</h3>
+                            <p class="text-2xl font-display font-bold mt-1">System Online</p>
+                            <div class="mt-4 flex gap-2">
+                                <span class="px-2 py-1 bg-white/20 rounded text-xs backdrop-blur-md">v2.0 Pro</span>
+                                <span class="px-2 py-1 bg-green-400/30 text-green-100 rounded text-xs backdrop-blur-md border border-green-400/30">Latency: 12ms</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Chart Section -->
+                <div class="glass-panel p-8 rounded-3xl animate-slide-up delay-500">
+                    <div class="flex justify-between items-center mb-6">
+                        <h3 class="text-xl font-bold font-display text-slate-800 flex items-center gap-2">
+                            <i class="fa-solid fa-chart-simple text-cyber-500"></i> Analytics
+                        </h3>
+                        <button class="w-8 h-8 rounded-full hover:bg-slate-100 transition flex items-center justify-center text-slate-400"><i class="fa-solid fa-ellipsis-vertical"></i></button>
+                    </div>
+                    <!-- Rainbow Bar Chart -->
+                    <div id="conditions-grid" class="space-y-4">
+                        <!-- JS Will Inject Bars Here -->
+                        <div class="text-center py-10 text-slate-400 animate-pulse">Loading Analytics Data...</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- VIEW 2: SEARCH -->
+            <div id="view-search" class="hidden space-y-4">
+                <div class="glass-panel rounded-3xl overflow-hidden animate-slide-up">
+                    <!-- Search Toolbar -->
+                    <div class="p-6 border-b border-white/50 flex flex-col md:flex-row gap-4 justify-between items-center bg-white/30">
+                        <div class="text-slate-800 font-bold text-lg flex items-center gap-2">
+                            <span class="w-8 h-8 rounded-lg bg-cyber-100 text-cyber-600 flex items-center justify-center font-display shadow-sm" id="result-count">0</span> 
+                            <span class="text-sm text-slate-500 font-normal uppercase tracking-wide">Records Found</span>
+                        </div>
+                        
+                        <form id="search-form" class="flex items-center gap-3 w-full md:w-auto">
+                            <div class="relative flex-1 md:w-64 group">
+                                <i class="fa-solid fa-magnifying-glass absolute left-4 top-3.5 text-slate-400 group-focus-within:text-cyber-500 transition-colors"></i>
+                                <input type="text" id="search-query" class="w-full bg-white border border-slate-200 rounded-2xl py-3 pl-10 pr-4 text-sm focus:outline-none focus:border-cyber-400 focus:ring-2 focus:ring-cyber-100 transition-all shadow-sm" placeholder="Search Database..." required>
+                            </div>
+                            <select id="search-type" class="bg-white border border-slate-200 rounded-2xl py-3 px-4 text-sm focus:outline-none focus:border-cyber-400 focus:ring-2 focus:ring-cyber-100 transition-all shadow-sm text-slate-600 cursor-pointer hover:bg-slate-50">
+                                <option value="name">Name</option>
+                                <option value="condition">Condition</option>
+                                <option value="blood_type">Blood Type</option>
+                            </select>
+                            <button type="submit" class="bg-gradient-to-r from-cyber-500 to-cyber-600 text-white w-12 h-12 rounded-2xl shadow-lg shadow-cyber-500/30 hover:shadow-cyber-500/50 hover:scale-105 transition-all flex items-center justify-center">
+                                <i class="fa-solid fa-arrow-right"></i>
+                            </button>
+                        </form>
+                    </div>
+
+                    <!-- Modern Table -->
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-left border-collapse">
+                            <thead>
+                                <tr class="text-slate-400 text-xs uppercase tracking-wider bg-slate-50/50 border-b border-slate-100">
+                                    <th class="px-6 py-4 font-bold">Name</th>
+                                    <th class="px-6 py-4 font-bold">Age</th>
+                                    <th class="px-6 py-4 font-bold">Gender</th>
+                                    <th class="px-6 py-4 font-bold">Blood</th>
+                                    <th class="px-6 py-4 font-bold">Condition</th>
+                                    <th class="px-6 py-4 font-bold">Insurance</th>
+                                    <th class="px-6 py-4 font-bold text-center">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody id="search-results" class="text-sm text-slate-600 divide-y divide-slate-100/50">
+                                <tr><td colspan="7" class="px-6 py-12 text-center text-slate-400 font-light text-lg">
+                                    <i class="fa-solid fa-database mb-3 text-3xl opacity-20 block animate-bounce"></i>
+                                    Initiate search to retrieve records...
+                                </td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- VIEW 3: ANALYZE -->
+            <div id="view-analyze" class="hidden animate-slide-up">
+                <div class="glass-panel rounded-3xl p-8 max-w-5xl mx-auto">
+                    <h2 class="text-2xl font-bold font-display text-slate-800 mb-6 flex items-center gap-3">
+                        <span class="w-10 h-10 rounded-xl bg-gradient-to-br from-pink-500 to-rose-500 text-white flex items-center justify-center shadow-lg"><i class="fa-solid fa-wand-magic-sparkles"></i></span>
+                        AI Diagnostic Suite
+                    </h2>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                        <!-- Upload Area -->
+                        <form id="analyze-form" class="space-y-6">
+                            <div class="bg-white/50 p-1 rounded-2xl flex gap-1 border border-white shadow-inner">
+                                <label class="cursor-pointer flex-1 relative">
+                                    <input type="radio" name="type" value="xray" class="peer hidden" checked>
+                                    <div class="py-3 rounded-xl text-center text-sm font-bold text-slate-500 transition-all peer-checked:bg-white peer-checked:text-cyber-600 peer-checked:shadow-md z-10 relative">X-Ray Scan</div>
+                                </label>
+                                <label class="cursor-pointer flex-1 relative">
+                                    <input type="radio" name="type" value="blood" class="peer hidden">
+                                    <div class="py-3 rounded-xl text-center text-sm font-bold text-slate-500 transition-all peer-checked:bg-white peer-checked:text-cyber-600 peer-checked:shadow-md z-10 relative">Blood Analysis</div>
+                                </label>
+                            </div>
+                            
+                            <!-- Symptom Input (Client-side Note) -->
+                            <div class="relative group">
+                                <textarea id="symptom-input" class="w-full bg-white border border-slate-200 rounded-2xl p-4 text-sm focus:outline-none focus:border-cyber-400 focus:ring-4 focus:ring-cyber-100 transition-all h-24 resize-none shadow-sm" placeholder="Enter clinical observations (Optional note)..."></textarea>
+                                <div class="absolute bottom-2 right-2 text-slate-300 text-xs group-focus-within:text-cyber-400 transition-colors"><i class="fa-solid fa-pen-to-square"></i></div>
+                            </div>
+
+                            <div class="border-2 border-dashed border-slate-300 rounded-3xl p-8 text-center hover:bg-blue-50/50 hover:border-cyber-400 transition-all duration-300 cursor-pointer relative group overflow-hidden">
+                                <div class="absolute inset-0 bg-gradient-to-tr from-cyber-50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                                <input type="file" id="image-input" class="absolute inset-0 opacity-0 w-full h-full cursor-pointer z-10" accept="image/*" required>
+                                
+                                <div id="upload-placeholder" class="group-hover:scale-105 transition duration-300 relative z-0">
+                                    <div class="w-20 h-20 bg-white text-cyber-500 rounded-full flex items-center justify-center mx-auto mb-4 text-3xl shadow-lg group-hover:shadow-neon transition-shadow">
+                                        <i class="fa-solid fa-cloud-arrow-up animate-bounce"></i>
+                                    </div>
+                                    <p class="text-slate-600 font-bold">Drop Medical Imaging Here</p>
+                                    <p class="text-xs text-slate-400 mt-2 bg-white/80 inline-block px-3 py-1 rounded-full border border-slate-100">PNG, JPG supported</p>
+                                </div>
+                                <img id="preview-thumb" class="hidden h-48 mx-auto rounded-2xl object-contain shadow-2xl relative z-0 ring-4 ring-white bg-black">
+                            </div>
+
+                            <button type="submit" class="w-full bg-gradient-to-r from-cyber-600 to-indigo-600 text-white py-4 rounded-2xl font-bold shadow-lg shadow-cyber-500/30 hover:shadow-neon-hover transition-all transform hover:-translate-y-1 hover:scale-[1.02] flex items-center justify-center gap-2 relative overflow-hidden group">
+                                <span class="absolute w-64 h-64 bg-white/20 rounded-full -top-10 -left-10 blur-3xl group-hover:translate-x-full transition-transform duration-700"></span>
+                                <i class="fa-solid fa-microchip"></i> Initialize Analysis
+                            </button>
+                        </form>
+
+                        <div class="bg-slate-900/5 rounded-3xl p-1 border border-white/50 shadow-inner relative overflow-hidden min-h-[400px]">
+                            <!-- Loading State -->
+                            <div id="analysis-loading" class="hidden absolute inset-0 flex flex-col items-center justify-center z-20 bg-white/80 backdrop-blur-sm rounded-2xl">
+                                <div class="relative w-24 h-24">
+                                    <div class="absolute inset-0 rounded-full border-4 border-slate-100"></div>
+                                    <div class="absolute inset-0 rounded-full border-4 border-t-cyber-500 animate-spin"></div>
+                                    <div class="absolute inset-4 rounded-full border-4 border-t-purple-500 animate-spin direction-reverse"></div>
+                                    <div class="absolute inset-0 flex items-center justify-center font-bold text-cyber-600 text-xs animate-pulse">AI</div>
+                                </div>
+                                <p class="text-slate-500 font-medium mt-4 tracking-widest uppercase text-xs">Processing Data...</p>
+                            </div>
+                            
+                            <!-- Empty State -->
+                            <div id="analysis-empty" class="absolute inset-0 flex flex-col items-center justify-center text-center text-slate-400 z-10 rounded-2xl bg-white/50">
+                                <div class="w-20 h-20 rounded-full bg-slate-100 flex items-center justify-center mb-4 shadow-inner">
+                                    <i class="fa-solid fa-wave-square text-3xl opacity-30"></i>
+                                </div>
+                                <p class="text-sm font-medium">Waiting for Input Stream</p>
+                            </div>
+
+                            <!-- Result State -->
+                            <div id="analysis-result" class="hidden absolute inset-0 w-full h-full z-10 flex flex-col bg-white rounded-2xl overflow-hidden shadow-2xl animate-pop-in">
+                                <div class="bg-slate-900 text-white p-6 relative overflow-hidden">
+                                    <div class="absolute top-0 right-0 w-32 h-32 bg-cyber-500/20 rounded-full blur-2xl"></div>
+                                    <div class="relative z-10 flex justify-between items-start">
+                                        <div>
+                                            <p class="text-[10px] text-cyber-400 uppercase font-bold tracking-widest mb-1">AI Prediction</p>
+                                            <h3 id="res-title" class="text-3xl font-display font-bold text-white tracking-tight">--</h3>
+                                        </div>
+                                        <div class="text-right">
+                                            <div class="text-4xl font-bold text-green-400" id="res-conf-text">--%</div>
+                                            <div class="text-[10px] text-slate-400 uppercase">Confidence</div>
+                                        </div>
+                                    </div>
+                                    <div class="h-1.5 w-full bg-slate-700 rounded-full overflow-hidden mt-4">
+                                        <div id="res-conf-bar" class="h-full bg-gradient-to-r from-green-400 to-cyber-400 rounded-full transition-all duration-1000 w-0 shadow-[0_0_10px_rgba(74,222,128,0.5)]"></div>
+                                    </div>
+                                </div>
+
+                                <div class="p-6 flex-1 overflow-y-auto bg-gradient-to-b from-slate-50 to-white">
+                                    <div id="res-details" class="space-y-3 text-sm"></div>
+                                    <!-- Symptom Note Display -->
+                                    <div id="symptom-analysis" class="mt-4 text-xs text-slate-600 italic p-3 bg-blue-50/80 rounded-xl border border-blue-100 hidden animate-slide-in-right flex gap-3 items-start">
+                                        <i class="fa-solid fa-notes-medical text-blue-400 mt-0.5"></i>
+                                        <div><strong class="text-blue-600 block mb-1">Clinical Note</strong><span id="symptom-text"></span></div>
+                                    </div>
+                                </div>
+                                
+                                <div class="p-4 bg-slate-50 border-t border-slate-100">
+                                    <button onclick="resetAnalysisUI()" class="w-full py-3 rounded-xl text-slate-500 hover:text-slate-800 hover:bg-slate-200 font-bold transition flex items-center gap-2 justify-center">
+                                        <i class="fa-solid fa-arrow-rotate-left"></i> Reset System
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- VIEW 4: CHAT -->
+            <div id="view-chat" class="hidden animate-slide-up h-[calc(100vh-140px)]">
+                <div class="glass-panel max-w-4xl mx-auto h-full rounded-3xl overflow-hidden flex flex-col shadow-2xl relative">
+                    <!-- Chat Header -->
+                    <div class="p-4 border-b border-white/50 flex justify-between items-center bg-white/40 backdrop-blur-md z-10">
+                        <div class="flex items-center gap-4">
+                            <div class="relative">
+                                <div class="w-12 h-12 rounded-full bg-gradient-to-tr from-cyber-500 to-indigo-500 p-0.5 shadow-lg">
+                                    <img src="https://api.dicebear.com/7.x/bottts/svg?seed=Medical" alt="Bot" class="w-full h-full rounded-full bg-white">
+                                </div>
+                                <div class="absolute bottom-0 right-0 w-3 h-3 bg-green-400 border-2 border-white rounded-full animate-pulse"></div>
+                            </div>
+                            <div>
+                                <h3 class="font-bold text-slate-800">Medical Consultant AI</h3>
+                                <p class="text-xs text-cyber-600 font-medium flex items-center gap-1">
+                                    <i class="fa-solid fa-bolt text-[10px]"></i> Real-time (Gemini)
+                                </p>
+                            </div>
+                        </div>
+                        <button onclick="clearChat()" class="w-10 h-10 rounded-xl hover:bg-red-50 hover:text-red-500 text-slate-400 transition flex items-center justify-center">
+                            <i class="fa-solid fa-trash-can"></i>
+                        </button>
+                    </div>
+
+                    <!-- Chat Area -->
+                    <div id="chat-messages" class="flex-1 overflow-y-auto p-6 space-y-6 bg-white/30 scroll-smooth">
+                        <div class="flex gap-4 animate-slide-in-right">
+                            <div class="w-10 h-10 rounded-full bg-white shadow-md p-1.5 flex-shrink-0 border border-slate-100">
+                                <img src="https://api.dicebear.com/7.x/bottts/svg?seed=Medical" class="w-full h-full">
+                            </div>
+                            <div class="bg-white/80 backdrop-blur-sm p-5 rounded-2xl rounded-tl-none text-sm text-slate-600 max-w-[80%] shadow-glass border border-white/50">
+                                Greetings! I am your AI Medical Assistant (Powered by Gemini). How can I help you today?
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Input Area -->
+                    <div class="p-4 bg-white/60 backdrop-blur-md border-t border-white/50">
+                        <form id="chat-form" class="flex gap-3 relative">
+                            <input type="text" id="chat-input" class="w-full bg-white/80 border-none rounded-2xl py-4 pl-6 pr-16 shadow-inner text-sm focus:ring-2 focus:ring-cyber-400 transition-all placeholder-slate-400" placeholder="Type your query here..." required autocomplete="off">
+                            <button type="submit" class="absolute right-2 top-2 w-12 h-12 bg-gradient-to-br from-cyber-500 to-indigo-600 text-white rounded-xl flex items-center justify-center hover:scale-105 hover:shadow-neon transition-all duration-300">
+                                <i class="fa-solid fa-paper-plane text-sm"></i>
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <!-- Modal (Futuristic Style) -->
+    <div id="patient-modal" class="fixed inset-0 z-[100] flex items-center justify-center bg-slate-900/60 backdrop-blur-sm hidden transition-all duration-300 opacity-0">
+        <div class="bg-white/90 backdrop-blur-xl w-full max-w-2xl rounded-3xl shadow-2xl overflow-hidden transform transition-all scale-95 border border-white/50" id="modal-content">
+            <div class="p-8 border-b border-slate-100 flex justify-between items-start bg-gradient-to-r from-cyber-50/50 to-purple-50/50">
+                <div class="flex gap-5 items-center">
+                    <div class="relative">
+                        <div class="w-20 h-20 rounded-2xl bg-white shadow-lg p-1 rotate-3 transform transition hover:rotate-0 duration-300">
+                            <img id="modal-img" src="" class="w-full h-full rounded-xl bg-slate-100 object-cover">
+                        </div>
+                        <div class="absolute -bottom-2 -right-2 w-8 h-8 bg-cyber-500 rounded-lg flex items-center justify-center text-white shadow-lg text-xs">
+                            <i class="fa-solid fa-id-card"></i>
+                        </div>
+                    </div>
+                    <div>
+                        <h2 id="modal-name" class="text-3xl font-display font-bold text-slate-800">Patient Name</h2>
+                        <div class="flex gap-2 mt-2">
+                            <span id="modal-age" class="text-[10px] font-bold text-slate-400 bg-slate-100 px-2 py-1 rounded-md uppercase tracking-wider">Age</span>
+                            <span id="modal-cond" class="text-[10px] font-bold text-white bg-gradient-to-r from-red-400 to-orange-400 px-3 py-1 rounded-full shadow-sm uppercase tracking-wider">Condition</span>
+                        </div>
+                    </div>
+                </div>
+                <button onclick="closeModal()" class="w-10 h-10 rounded-full bg-white hover:bg-slate-100 text-slate-400 hover:text-slate-800 shadow-sm flex items-center justify-center transition hover:rotate-90"><i class="fa-solid fa-xmark text-lg"></i></button>
+            </div>
+            
+            <div class="p-8 max-h-[60vh] overflow-y-auto bg-slate-50/30">
+                <div id="modal-loading" class="hidden flex flex-col items-center justify-center py-12">
+                    <div class="relative w-16 h-16">
+                         <span class="absolute top-0 left-0 w-full h-full rounded-full border-4 border-slate-200 opacity-50"></span>
+                         <span class="absolute top-0 left-0 w-full h-full rounded-full border-4 border-t-cyber-500 animate-spin"></span>
+                    </div>
+                    <p class="text-cyber-600 font-bold mt-6 animate-pulse uppercase text-xs tracking-widest">Generating Neural Care Plan...</p>
+                </div>
+                
+                <div id="ai-report-content" class="ai-report text-sm text-slate-600 hidden animate-slide-up leading-relaxed p-4 bg-white rounded-2xl shadow-sm border border-slate-100">
+                    <!-- Report content -->
+                </div>
+
+                <div id="modal-initial" class="text-center py-12">
+                    <div class="w-20 h-20 bg-gradient-to-br from-cyber-100 to-indigo-100 text-cyber-600 rounded-3xl flex items-center justify-center mx-auto mb-6 text-4xl shadow-inner animate-float">
+                        <i class="fa-solid fa-brain"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-slate-800">AI Medical Analysis</h3>
+                    <p class="text-slate-500 text-sm mt-2 mb-8 max-w-xs mx-auto">Generate comprehensive care plans using the Gemini Neural Engine.</p>
+                    <button onclick="generateReport()" class="bg-slate-900 text-white px-8 py-4 rounded-2xl font-bold shadow-lg shadow-slate-900/20 hover:shadow-xl hover:scale-105 transition-all flex items-center gap-3 mx-auto group">
+                        <span>Activate Gemini</span> 
+                        <span class="bg-cyber-500 text-white text-[10px] px-1.5 py-0.5 rounded-md group-hover:bg-cyber-400 transition">PRO</span>
+                        <i class="fa-solid fa-arrow-right-long group-hover:translate-x-1 transition-transform"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Logic Script -->
+    <script>
+        const API_BASE_URL = 'http://localhost:8000';
+        let sessionId = localStorage.getItem('ai_medical_session') || 'session_' + Math.random().toString(36).substr(2, 9);
+        localStorage.setItem('ai_medical_session', sessionId);
+        let selectedPatient = null;
+        let isConnected = false;
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const dateOptions = { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' };
+            document.getElementById('current-date').textContent = new Date().toLocaleDateString('en-US', dateOptions);
+            
+            checkBackendStatus();
+            loadDashboard(); // Load Real Data
+            
+            document.getElementById('image-input').addEventListener('change', function(e) {
+                if(this.files && this.files[0]) {
+                    const reader = new FileReader();
+                    reader.onload = (e) => {
+                        const img = document.getElementById('preview-thumb');
+                        img.src = e.target.result;
+                        img.classList.remove('hidden');
+                        document.getElementById('upload-placeholder').classList.add('hidden');
+                    }
+                    reader.readAsDataURL(this.files[0]);
+                }
+            });
+        });
+
+        // --- Core Connection Check ---
+        async function checkBackendStatus() {
+            try {
+                const res = await fetch(`${API_BASE_URL}/`);
+                if(res.ok) {
+                    isConnected = true;
+                    document.getElementById('server-status-text').innerHTML = '<span class="w-1.5 h-1.5 rounded-full bg-green-400 animate-ping inline-block mr-1"></span> Online';
+                } else throw new Error();
+            } catch (e) {
+                isConnected = false;
+                document.getElementById('server-status-text').innerHTML = '<span class="w-1.5 h-1.5 rounded-full bg-red-500 inline-block mr-1"></span> Offline';
+                showToast('Server not connected', 'error');
+            }
+        }
+
+        // --- Navigation ---
+        function switchTab(tabName) {
+            ['dashboard', 'search', 'analyze', 'chat'].forEach(t => {
+                document.getElementById(`view-${t}`).classList.add('hidden');
+                document.getElementById(`nav-${t}`).classList.remove('nav-active', 'bg-white', 'text-cyber-600', 'shadow-md');
+                document.getElementById(`nav-${t}`).classList.add('text-slate-500');
+            });
+            
+            const view = document.getElementById(`view-${tabName}`);
+            view.classList.remove('hidden');
+            view.classList.remove('animate-slide-up');
+            void view.offsetWidth; 
+            view.classList.add('animate-slide-up');
+
+            const nav = document.getElementById(`nav-${tabName}`);
+            nav.classList.add('nav-active', 'bg-white', 'text-cyber-600', 'shadow-md');
+            nav.classList.remove('text-slate-500');
+
+            const titles = { 'dashboard': 'System Overview', 'search': 'Patient Database', 'analyze': 'Diagnostic Suite', 'chat': 'AI Consultant' };
+            document.getElementById('page-title').textContent = titles[tabName];
+        }
+
+        // --- 1. Dashboard (Real API) ---
+        async function loadDashboard() {
+            try {
+                const res = await fetch(`${API_BASE_URL}/patient/stats`);
+                const data = await res.json();
+                
+                if(data.success) {
+                    const stats = data.stats;
+                    
+                    // Stats
+                    animateCount('dash-total', stats.total_patients);
+                    document.getElementById('dash-age').textContent = stats.avg_age.toFixed(1);
+                    
+                    const fCount = stats.gender['Female'] || 0;
+                    const mCount = stats.gender['Male'] || 0;
+                    document.getElementById('dash-gender').textContent = `F: ${fCount} / M: ${mCount}`;
+
+                    // Conditions Chart
+                    renderConditionsChart(stats.conditions);
+                }
+            } catch (e) {
+                console.error("Dashboard Load Error:", e);
+                // Fail gracefully or show error UI
+            }
+        }
+
+        function animateCount(id, target) {
+            const el = document.getElementById(id);
+            let current = 0;
+            const inc = Math.ceil(target / 50);
+            const timer = setInterval(() => {
+                current += inc;
+                if(current >= target) {
+                    el.innerText = target.toLocaleString();
+                    clearInterval(timer);
+                } else {
+                    el.innerText = current.toLocaleString();
+                }
+            }, 20);
+        }
+
+        function renderConditionsChart(conditionsObj) {
+            const container = document.getElementById('conditions-grid');
+            container.innerHTML = '';
+            
+            // Map entries to array
+            const conditionArr = Object.entries(conditionsObj)
+                .sort((a,b) => b[1] - a[1]) // Sort desc
+                .slice(0, 6); // Top 6
+
+            const maxVal = conditionArr[0][1] || 100;
+            
+            // Palette
+            const palettes = [
+                { color: "bg-gradient-to-r from-red-400 to-rose-500", text: "text-red-500" },
+                { color: "bg-gradient-to-r from-orange-400 to-amber-500", text: "text-orange-500" },
+                { color: "bg-gradient-to-r from-yellow-400 to-lime-500", text: "text-yellow-600" },
+                { color: "bg-gradient-to-r from-green-400 to-emerald-500", text: "text-green-500" },
+                { color: "bg-gradient-to-r from-blue-400 to-cyan-500", text: "text-blue-500" },
+                { color: "bg-gradient-to-r from-indigo-400 to-violet-500", text: "text-indigo-500" }
+            ];
+
+            conditionArr.forEach((c, i) => {
+                const style = palettes[i % palettes.length];
+                const width = (c[1] / maxVal) * 100;
+                
+                container.innerHTML += `
+                    <div class="group cursor-pointer">
+                        <div class="flex justify-between mb-2">
+                            <span class="text-xs font-bold ${style.text} bg-white px-3 py-1 rounded-full shadow-sm border border-slate-100 group-hover:scale-105 transition-transform">${c[0]}</span>
+                            <span class="text-xs font-bold text-slate-400 group-hover:text-slate-800 transition-colors">${c[1]} Cases</span>
+                        </div>
+                        <div class="w-full bg-slate-100 rounded-full h-3 overflow-hidden shadow-inner">
+                            <div class="${style.color} h-3 rounded-full relative overflow-hidden transition-all duration-1000 ease-out group-hover:brightness-110" style="width: 0%; animation: loadBar 1s ease-out forwards ${i * 0.1}s">
+                                <div class="absolute inset-0 bg-white/30 w-full h-full animate-[shimmer_2s_infinite]"></div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            });
+            
+            // Add keyframes dynamically
+            const styleEl = document.createElement('style');
+            styleEl.innerHTML = `
+                @keyframes loadBar { to { width: var(--target-width); } }
+                @keyframes shimmer { 0% { transform: translateX(-100%); } 100% { transform: translateX(100%); } }
+            `;
+            document.head.appendChild(styleEl);
+            
+            setTimeout(() => {
+                const bars = container.querySelectorAll('[style*="width: 0%"]');
+                bars.forEach((bar, index) => {
+                    if(conditionArr[index]) {
+                        bar.style.setProperty('--target-width', (conditionArr[index][1] / maxVal * 100) + '%');
+                    }
+                });
+            }, 100);
+        }
+
+        // --- 2. Search (Real API) ---
+        document.getElementById('search-form').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const query = document.getElementById('search-query').value;
+            const type = document.getElementById('search-type').value;
+            const tbody = document.getElementById('search-results');
+            
+            tbody.innerHTML = '<tr><td colspan="7" class="py-20 text-center"><div class="flex justify-center"><div class="w-12 h-12 border-4 border-slate-200 border-t-cyber-500 rounded-full animate-spin"></div></div></td></tr>';
+            
+            try {
+                const formData = new FormData();
+                formData.append('search_query', query);
+                formData.append('search_type', type);
+
+                const res = await fetch(`${API_BASE_URL}/patient/search`, {
+                    method: 'POST',
+                    body: formData
+                });
+                const data = await res.json();
+
+                tbody.innerHTML = '';
+                
+                if(data.success && data.results.length > 0) {
+                    document.getElementById('result-count').textContent = data.total;
+                    
+                    data.results.forEach((p, index) => {
+                        const pStr = encodeURIComponent(JSON.stringify(p));
+                        tbody.innerHTML += `
+                            <tr class="hover:bg-slate-50 transition-colors border-b border-slate-50 last:border-0 group animate-slide-up" style="animation-delay: ${index * 50}ms">
+                                <td class="px-6 py-5 font-mono text-slate-400 group-hover:text-cyber-600 transition-colors">#${Math.floor(Math.random()*1000)}</td>
+                                <td class="px-6 py-5">
+                                    <div class="flex items-center gap-4">
+                                        <div class="relative">
+                                            <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=${p.Name}" class="w-10 h-10 rounded-full bg-white shadow-sm border border-slate-100 group-hover:scale-110 transition-transform">
+                                        </div>
+                                        <div>
+                                            <span class="font-bold text-slate-700 block text-base">${p.Name}</span>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td class="px-6 py-5 text-slate-500">${p.Age} / ${p.Gender}</td>
+                                <td class="px-6 py-5"><span class="font-bold text-slate-700 bg-slate-100 px-2 py-1 rounded">${p['Blood Type']}</span></td>
+                                <td class="px-6 py-5 font-bold text-cyber-700">${p['Medical Condition']}</td>
+                                <td class="px-6 py-5 text-sm text-slate-500">${p['Insurance Provider']}</td>
+                                <td class="px-6 py-5 text-center">
+                                    <button onclick="openModal('${pStr}')" class="w-10 h-10 rounded-xl bg-white text-slate-400 hover:text-white hover:bg-cyber-500 shadow-sm hover:shadow-neon transition-all flex items-center justify-center transform hover:rotate-90">
+                                        <i class="fa-solid fa-gear"></i>
+                                    </button>
+                                </td>
+                            </tr>
+                        `;
+                    });
+                } else {
+                    document.getElementById('result-count').textContent = 0;
+                    tbody.innerHTML = '<tr><td colspan="7" class="py-12 text-center text-slate-400">No records found.</td></tr>';
+                }
+            } catch(e) {
+                console.error(e);
+                tbody.innerHTML = '<tr><td colspan="7" class="py-12 text-center text-red-400">Error connecting to database.</td></tr>';
+            }
+        });
+
+        // --- 3. Analyze (Real API) ---
+        document.getElementById('analyze-form').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const fileInput = document.getElementById('image-input');
+            const type = document.querySelector('input[name="type"]:checked').value;
+            const symptomInput = document.getElementById('symptom-input').value;
+            
+            if(!fileInput.files[0]) { showToast('⚠️ System Alert: Image Data Required', 'error'); return; }
+
+            // UI State
+            document.getElementById('analysis-empty').classList.add('hidden');
+            document.getElementById('analysis-result').classList.add('hidden');
+            document.getElementById('analysis-loading').classList.remove('hidden');
+
+            const formData = new FormData();
+            formData.append('file', fileInput.files[0]);
+            formData.append('image_type', type);
+
+            try {
+                const res = await fetch(`${API_BASE_URL}/analyze`, {
+                    method: 'POST',
+                    body: formData
+                });
+                const data = await res.json();
+
+                document.getElementById('analysis-loading').classList.add('hidden');
+                
+                if(data.success) {
+                    document.getElementById('analysis-result').classList.remove('hidden');
+                    document.getElementById('analysis-result').classList.add('flex');
+                    
+                    const details = document.getElementById('res-details');
+                    
+                    if(data.type === 'xray') {
+                        document.getElementById('res-title').textContent = data.result;
+                        document.getElementById('res-conf-text').textContent = data.confidence;
+                        setTimeout(() => document.getElementById('res-conf-bar').style.width = data.confidence, 100);
+                        
+                        // Show all predictions
+                        let predHtml = '';
+                        for (const [k, v] of Object.entries(data.all_predictions)) {
+                            predHtml += `<div class="flex justify-between p-2 hover:bg-slate-50 rounded"><span class="text-slate-400">${k}</span> <span class="font-bold text-slate-700">${v}</span></div>`;
+                        }
+                        details.innerHTML = predHtml;
+
+                    } else { // Blood
+                        document.getElementById('res-title').textContent = `${data.total_cells} Cells`;
+                        document.getElementById('res-conf-text').textContent = '100%';
+                        setTimeout(() => document.getElementById('res-conf-bar').style.width = '100%', 100);
+                        
+                        let cellHtml = '';
+                        for (const [k, v] of Object.entries(data.cell_counts)) {
+                            cellHtml += `<div class="flex justify-between p-2 hover:bg-slate-50 rounded"><span class="text-slate-400 capitalize">${k}</span> <span class="font-bold text-slate-700">${v}</span></div>`;
+                        }
+                        details.innerHTML = cellHtml;
+                    }
+
+                    // Client-side Symptom Note display (Just reflecting input as we don't have symptom API logic in backend_simple.py)
+                    const symptomDiv = document.getElementById('symptom-analysis');
+                    const symptomText = document.getElementById('symptom-text');
+                    if(symptomInput.trim().length > 0) {
+                        symptomDiv.classList.remove('hidden');
+                        symptomText.innerHTML = `Note: "${symptomInput}" has been recorded with this analysis.`;
+                    } else {
+                        symptomDiv.classList.add('hidden');
+                    }
+
+                } else {
+                    showToast(data.error || 'Analysis Failed', 'error');
+                    resetAnalysisUI();
+                }
+
+            } catch(e) {
+                document.getElementById('analysis-loading').classList.add('hidden');
+                showToast('Server Error during analysis', 'error');
+                resetAnalysisUI();
+            }
+        });
+
+        function resetAnalysisUI() {
+            document.getElementById('analysis-result').classList.add('hidden');
+            document.getElementById('analysis-result').classList.remove('flex');
+            document.getElementById('analysis-empty').classList.remove('hidden');
+            document.getElementById('upload-placeholder').classList.remove('hidden');
+            document.getElementById('preview-thumb').classList.add('hidden');
+            document.getElementById('res-conf-bar').style.width = '0';
+            document.getElementById('analyze-form').reset();
+            document.getElementById('symptom-analysis').classList.add('hidden');
+        }
+
+        // --- 4. Chat (Real API) ---
+        document.getElementById('chat-form').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const input = document.getElementById('chat-input');
+            const msg = input.value.trim();
+            if(!msg) return;
+
+            addMsg('user', msg);
+            input.value = '';
+
+            try {
+                const formData = new FormData();
+                formData.append('message', msg);
+                formData.append('session_id', sessionId);
+                
+                const res = await fetch(`${API_BASE_URL}/chat`, { method: 'POST', body: formData });
+                const data = await res.json();
+                
+                if(data.success) {
+                    addMsg('ai', data.response);
+                } else {
+                    throw new Error('API Error');
+                }
+            } catch (e) {
+                addMsg('ai', "⚠️ Connection Error. Please ensure backend is running.");
+            }
+        });
+
+        function addMsg(role, text) {
+            const container = document.getElementById('chat-messages');
+            const isUser = role === 'user';
+            const html = `
+                <div class="flex gap-4 ${isUser ? 'flex-row-reverse' : ''} animate-slide-up">
+                    <div class="w-10 h-10 rounded-full ${isUser ? 'bg-indigo-500' : 'bg-white'} p-0.5 flex-shrink-0 shadow-lg border-2 border-white">
+                        <img src="https://api.dicebear.com/7.x/${isUser ? 'avataaars' : 'bottts'}/svg?seed=${isUser ? 'User' : 'Medical'}" class="w-full h-full rounded-full bg-white">
+                    </div>
+                    <div class="${isUser ? 'bg-gradient-to-br from-cyber-600 to-indigo-600 text-white' : 'bg-white/90 backdrop-blur text-slate-700 border border-white'} p-5 rounded-3xl ${isUser ? 'rounded-tr-none' : 'rounded-tl-none'} text-sm max-w-[80%] shadow-lg leading-relaxed relative group">
+                        ${text.replace(/\n/g, '<br>')}
+                    </div>
+                </div>`;
+            container.insertAdjacentHTML('beforeend', html);
+            container.scrollTop = container.scrollHeight;
+        }
+
+        async function clearChat() { 
+            if(confirm('Purge neural logs?')) {
+                try {
+                    await fetch(`${API_BASE_URL}/chat/clear/${sessionId}`);
+                    document.getElementById('chat-messages').innerHTML = '';
+                } catch(e) {
+                    showToast('Failed to clear chat', 'error');
+                }
+            }
+        }
+
+        // --- 5. Modal Report (Using Chat API) ---
+        function openModal(patientStr) {
+            selectedPatient = JSON.parse(decodeURIComponent(patientStr));
+            document.getElementById('modal-img').src = `https://api.dicebear.com/7.x/avataaars/svg?seed=${selectedPatient.Name}`;
+            document.getElementById('modal-name').textContent = selectedPatient.Name;
+            document.getElementById('modal-age').textContent = selectedPatient.Age + " Yrs";
+            document.getElementById('modal-cond').textContent = selectedPatient['Medical Condition'];
+            
+            // Reset
+            document.getElementById('modal-initial').classList.remove('hidden');
+            document.getElementById('modal-loading').classList.add('hidden');
+            document.getElementById('ai-report-content').classList.add('hidden');
+            document.getElementById('ai-report-content').innerHTML = '';
+
+            const modal = document.getElementById('patient-modal');
+            modal.classList.remove('hidden');
+            setTimeout(() => {
+                modal.classList.remove('opacity-0');
+                document.getElementById('modal-content').classList.remove('scale-95');
+                document.getElementById('modal-content').classList.add('scale-100');
+            }, 50);
+        }
+
+        function closeModal() {
+            const modal = document.getElementById('patient-modal');
+            modal.classList.add('opacity-0');
+            document.getElementById('modal-content').classList.add('scale-95');
+            document.getElementById('modal-content').classList.remove('scale-100');
+            setTimeout(() => modal.classList.add('hidden'), 300);
+        }
+
+        async function generateReport() {
+            document.getElementById('modal-initial').classList.add('hidden');
+            document.getElementById('modal-loading').classList.remove('hidden');
+
+            // Prompt Engineering for the Report
+            const prompt = `Act as an AI Medical Consultant. Generate a brief Medical Care Plan for:
+            Patient: ${selectedPatient.Name}, Age: ${selectedPatient.Age}, Gender: ${selectedPatient.Gender}
+            Condition: ${selectedPatient['Medical Condition']}
+            
+            Please provide:
+            1. Brief summary of the condition.
+            2. 3 Key Recommendations.
+            3. Warning signs to watch for.
+            Format in Markdown.`;
+
+            try {
+                const formData = new FormData();
+                formData.append('message', prompt);
+                formData.append('session_id', 'report_gen_' + Math.random()); // Use unique ID to avoid history clutter
+                
+                const res = await fetch(`${API_BASE_URL}/chat`, { method: 'POST', body: formData });
+                const data = await res.json();
+                
+                if(data.success) renderReport(data.response);
+                else throw new Error();
+            } catch (e) {
+                showToast("AI Generation Failed. Check Backend.", 'error');
+                document.getElementById('modal-loading').classList.add('hidden');
+                document.getElementById('modal-initial').classList.remove('hidden');
+            }
+        }
+
+        function renderReport(text) {
+            document.getElementById('modal-loading').classList.add('hidden');
+            const content = document.getElementById('ai-report-content');
+            content.classList.remove('hidden');
+            content.innerHTML = marked.parse(text);
+        }
+
+        // --- Utils ---
+        function showToast(msg, type='success') {
+            const toast = document.getElementById('toast');
+            const icon = document.getElementById('toast-icon');
+            const container = document.getElementById('toast-icon-container');
+            
+            document.getElementById('toast-message').textContent = msg;
+            
+            if(type === 'error') {
+                container.classList.remove('bg-green-500');
+                container.classList.add('bg-red-500');
+                icon.className = 'fa-solid fa-circle-exclamation text-xs';
+            } else {
+                container.classList.remove('bg-red-500');
+                container.classList.add('bg-green-500');
+                icon.className = 'fa-solid fa-check text-xs';
+            }
+
+            toast.style.opacity = '1'; 
+            toast.style.transform = 'translate(-50%, 0px)';
+            setTimeout(() => { 
+                toast.style.opacity = '0'; 
+                toast.style.transform = 'translate(-50%, -20px)'; 
+            }, 3000);
+        }
+    </script>
+</body>
+</html>
